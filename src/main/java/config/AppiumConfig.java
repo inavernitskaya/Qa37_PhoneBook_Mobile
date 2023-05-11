@@ -20,7 +20,7 @@ import java.net.URL;
 //    }
         protected static AppiumDriver<AndroidElement> driver;
 
-        @BeforeSuite
+        @BeforeSuite//BeforeMethod
         public void setUp() throws MalformedURLException {
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability("platformName", "Android");
