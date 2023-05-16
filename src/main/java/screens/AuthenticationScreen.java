@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-public class AuthenticationScreen extends BaseScreen {
+public class AuthenticationScreen extends BaseScreen{
     public AuthenticationScreen(AppiumDriver<AndroidElement> driver) {
         super(driver);
     }
@@ -24,24 +24,27 @@ public class AuthenticationScreen extends BaseScreen {
     AndroidElement loginButton;
 
     public AuthenticationScreen fillLoginRegistrationForm(Auth auth){
-        should(emailEditText, 18);
+        should(emailEditText,10);
         type(emailEditText, auth.getEmail());
         type(passwordEditText, auth.getPassword());
         return this;
     }
-    public AuthenticationScreen fillEmail(String email) {
+
+    public AuthenticationScreen fillEmail(String email){
         //pause(4000)
-        should(emailEditText,18);
-        type(emailEditText, email);
+        should(emailEditText,10);
+        type(emailEditText,email);
         return this;
     }
 
-    public AuthenticationScreen fillPassword(String password) {
-        type(passwordEditText, password);
+    public AuthenticationScreen fillPassword(String password){
+        type(passwordEditText,password);
         return this;
     }
+
     public ContactListScreen submitLogin(){
         loginButton.click();
+
         return new ContactListScreen(driver);
     }
 
@@ -49,14 +52,9 @@ public class AuthenticationScreen extends BaseScreen {
         loginButton.click();
         return this;
     }
-
     public AuthenticationScreen isErrorMessageContainsText(String text){
-        Alert alert = new WebDriverWait(driver,10)
-                .until(ExpectedConditions.alertIsPresent());
-        driver.switchTo().alert();
-        Assert.assertTrue(alert.getText().contains(text));
-        alert.accept();
+        checkAlertText(text);
+
         return this;
     }
-
 }
