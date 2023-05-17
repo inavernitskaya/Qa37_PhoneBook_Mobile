@@ -8,11 +8,10 @@ import org.testng.Assert;
 
 import java.util.List;
 
-public class ContactListScreen extends BaseScreen {
+public class ContactListScreen extends BaseScreen{
     public ContactListScreen(AppiumDriver<AndroidElement> driver) {
         super(driver);
     }
-
     // xpath="//*[@resource-id='com.sheygam.contactapp:id/action_bar']/android.widget.TextView"
     @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/action_bar']/android.widget.TextView")
     AndroidElement activityTextView;
@@ -25,14 +24,14 @@ public class ContactListScreen extends BaseScreen {
     @FindBy(xpath = "//*[@resource-id='com.sheygam.contactapp:id/rowName']")
     List<AndroidElement> contactNameList;
 
-    public ContactListScreen isContactAddedByName(String name, String lastName) {
+    public ContactListScreen isContactAddedByName(String name,String lastName){
         // List<AndroidElement> list =  driver.findElements(By.xpath(""));
-        isShouldHave(activityTextView, "Contact list", 10);
-        System.out.println("size of list" + contactNameList.size());
-        boolean isPresent = false;
+        isShouldHave(activityTextView,"Contact list",5);
+        System.out.println("size of list" +contactNameList.size());
+        boolean isPresent=false;
 
-        for (AndroidElement el : contactNameList) {
-            if (el.getText().equals(name + " " + lastName)) {
+        for (AndroidElement el:contactNameList) {
+            if(el.getText().equals(name + " "+lastName)){
                 isPresent = true;
                 break;
             }
@@ -44,25 +43,25 @@ public class ContactListScreen extends BaseScreen {
         return this;
     }
 
-    public AddNewContactScreen openContactForm() {
-        if (activityTextView.getText().equals("Contact list"))
+    public AddNewContactScreen openContactForm(){
+        should(plusButton,10);
+        if(activityTextView.getText().equals("Contact list"))
             plusButton.click();
         return new AddNewContactScreen(driver);
     }
 
 
-    public ContactListScreen isAccountOpened() {
+    public ContactListScreen isAccountOpened(){
         Assert.assertTrue(isActivityTitleDisplayed("Contact list"));
         return this;
     }
-
-    public boolean isActivityTitleDisplayed(String text) {
+    public boolean isActivityTitleDisplayed(String text){
         //return activityTextView.getText().contains("Contact list");
-        return isShouldHave(activityTextView, text, 10);
+        return isShouldHave(activityTextView,text,10);
     }
 
-    public AuthenticationScreen logout() {
-        if (activityTextView.getText().equals("Contact list")) {
+    public AuthenticationScreen logout(){
+        if(activityTextView.getText().equals("Contact list")) {
             menuOptions.click();
             logoutButton.click();
         }
