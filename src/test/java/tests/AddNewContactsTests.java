@@ -16,7 +16,8 @@ public class AddNewContactsTests extends AppiumConfig {
     public void preCondition() {
         new AuthenticationScreen(driver)
                 .fillLoginRegistrationForm(Auth.builder().email("inna_83@gmail.com").password("Aa13579$").build())
-                .submitLogin();
+                .submitLogin()
+        .isActivityTitleDisplayed("Contact list");
     }
 
     @Test
@@ -51,6 +52,7 @@ public class AddNewContactsTests extends AppiumConfig {
                 .fillContactForm(contact)
                 .submitContactFormNegative()
                 .isErrorContainsText("{name=must not be blank}");
+
 
     }
 
