@@ -5,6 +5,7 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -26,6 +27,7 @@ public class BaseScreen {
         element.click();
         element.clear();
         if(text!=null){
+
             element.sendKeys(text);
         }
         driver.hideKeyboard();
@@ -39,10 +41,11 @@ public class BaseScreen {
         new WebDriverWait(driver,time).until(ExpectedConditions.visibilityOf(element));
     }
 
-    public void shouldLessOne(List<AndroidElement> list){
-        new WebDriverWait(driver,5)
-                .until(ExpectedConditions.numberOfElementsToBeLessThan(By.xpath("//*[@resource-id= 'com.sheygam.contactapp:id/rowContainer']"),1));
+    public void shoulLessOne(List<AndroidElement>list, int less){
+        new WebDriverWait(driver, 5)
+                .until(ExpectedConditions.numberOfElementsToBeLessThan(By.xpath("//*[@resource-id='com.sheygam.contactapp:id/rowContainer']"), less));
     }
+
     public void checkAlertText(String text){
         Alert alert = new WebDriverWait(driver,10)
                 .until(ExpectedConditions.alertIsPresent());
@@ -52,21 +55,27 @@ public class BaseScreen {
         alert.accept();
 
     }
-    public boolean isElementPresentIntList(By locator){
+    public  boolean isElementPresentInList(By locator){
         return driver.findElements(locator).size()>0;
 
     }
-    public boolean isElementPresentIntList(List<AndroidElement> list){
+    public  boolean isElementPresentInList(List<AndroidElement> list){
         return list.size()>0;
 
     }
-   public boolean isElementDisplayed(AndroidElement element){
-  try {
-      should(element,5);
-      return element.isDisplayed();
-  }catch (IllegalAccessError e){
-      return false;
-
-       }
-   }
+    public  boolean isElementDisplayed(AndroidElement element){
+        try {
+            should( element,5);
+            return element.isDisplayed();
+        }catch (IllegalAccessError e){
+            return false;
+        }
+    }
+    public void pause(int time){
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

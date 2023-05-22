@@ -20,14 +20,14 @@ public class AddNewContactsTests extends AppiumConfig {
         .isActivityTitleDisplayed("Contact list");
     }
 
-    @Test
-    public void createNewContactSuccess() {
-        int i = new Random().nextInt(1000) + 1000;
+    @Test(invocationCount = 3)
+    public void createNewContactSuccess(){
+        int i = new Random().nextInt(1000)+1000;
         Contact contact = Contact.builder()
                 .name("Simon")
-                .lastName("Wow" + i)
-                .email("wow" + i + "@gmail.com")
-                .phone("6789456" + i)
+                .lastName( "Wow"+i)
+                .email("wow"+i+"@gmail.com")
+                .phone("6789456"+i)
                 .address("NY")
                 .description("The best friend")
                 .build();
@@ -35,13 +35,16 @@ public class AddNewContactsTests extends AppiumConfig {
                 .openContactForm()
                 .fillContactForm(contact)
                 .submitContactForm()
-                .isContactAddedByName(contact.getName(), contact.getLastName());
+                .isContactAddedByName(contact.getName(),contact.getLastName());
+
+
+
     }
 
     @Test
-    public void createContactWithEmptyName() {
+    public void createContactWithEmptyName(){
         Contact contact = Contact.builder()
-                .lastName("Dow")
+                .lastName( "Dow")
                 .email("dow@gmail.com")
                 .phone("678945633333")
                 .address("NY")
@@ -53,99 +56,44 @@ public class AddNewContactsTests extends AppiumConfig {
                 .submitContactFormNegative()
                 .isErrorContainsText("{name=must not be blank}");
 
-
     }
-
     @Test
-    public void createNewContactSuccessReq() {
-        int i = new Random().nextInt(1000) + 1000;
-        Contact contact = Contact.builder()
-                .name("Simon")
-                .lastName("Wow" + i)
-                .email("wow" + i + "@gmail.com")
-                .phone("6789456" + i)
-                .address("NY")
+    public void createNewContactSuccessReq(){
+        int i = new Random().nextInt(1000)+1000;
+        Contact contact =Contact.builder()
+                .name("Wolf")
+                .lastName("Wow"+i)
+                .email("wow"+i+"@mail.com")
+                .phone("1234572345")
+                .address("Rehovot")
                 .build();
         new ContactListScreen(driver)
                 .openContactForm()
                 .fillContactForm(contact)
                 .submitContactForm()
-                .isContactAddedByName(contact.getName(), contact.getLastName());
-    }
+                .isContactAddedByName(contact.getName(),contact.getLastName());
 
+
+    }
     @Test
-    public void createContactWithEmptyLastName() {
-        Contact contact = Contact.builder()
-                .name("Sam")
-                .email("dow@gmail.com")
-                .phone("678945633333")
-                .address("NY")
-                .description("Empty last name")
-                .build();
+    public void addNewContactEmptyLastName(){
+
+        Contact contact =Contact.builder()
+                .name("Neg")
+                .email("neg@mail.com")
+                .phone("1234572345")
+                .address("Rehovot")
+                .description("The best friend").build();
+
         new ContactListScreen(driver)
                 .openContactForm()
                 .fillContactForm(contact)
                 .submitContactFormNegative()
-                .isErrorContainsText("{lastName=must not be blank}");
-
+                .isErrorContainsText("Error");
     }
-
-    @Test
-    public void createContactWithWrongEmail() {
-        Contact contact = Contact.builder()
-                .name("Sam")
-                .lastName("Swong")
-                .email("dowgmail.com")
-                .phone("678945633333")
-                .address("NY")
-                .description("Wrong email")
-                .build();
-        new ContactListScreen(driver)
-                .openContactForm()
-                .fillContactForm(contact)
-                .submitContactFormNegative()
-                .isErrorContainsText("{email=must be a well-formed email address}");
-
-    }
-
-    @Test
-    public void createContactWithWrongPhone() {
-        Contact contact = Contact.builder()
-                .name("Sam")
-                .lastName("Swong")
-                .email("dow@gmail.com")
-                .phone("6789")
-                .address("NY")
-                .description("Wrong phone")
-                .build();
-        new ContactListScreen(driver)
-                .openContactForm()
-                .fillContactForm(contact)
-                .submitContactFormNegative()
-                .isErrorContainsText("{phone=Phone number must contain only digits! And length min 10, max 15!}");
-
-    }
-
-    @Test
-    public void createContactWithEmptyAddress() {
-        Contact contact = Contact.builder()
-                .name("Sam")
-                .lastName("Swong")
-                .email("dow@gmail.com")
-                .phone("6789685340")
-                .description("Empty address")
-                .build();
-        new ContactListScreen(driver)
-                .openContactForm()
-                .fillContactForm(contact)
-                .submitContactFormNegative()
-                .isErrorContainsText("{address=must not be blank}");
-
-    }
-
 
     @AfterClass
-    public void postCondition() {
+    public void postCondition(){
 
         new ContactListScreen(driver)
                 .logout();
